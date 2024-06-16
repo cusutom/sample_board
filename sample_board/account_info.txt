@@ -1,0 +1,6 @@
+school_id:0001
+first_name:super
+last_name:user
+status:teacher
+birthday:2024-06-15
+password:superuser0001
