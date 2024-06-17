@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST" class="border 1px solid lg">
+{% csrf_token %}
+{{ delete_user_form.as_p }}
+
+<p >本当にアカウントを削除してもよろしいですか？</p><br>
+<p>アカウントを削除すると、ログアウトしてwelcomeページに戻ります。</p>
+
+<div><input type="submit" value="ユーザ削除"></div>
+<div><a href="{% url 'accounts:edit' %}">戻る</a></div>
+
+</form>
+{% endblock %}

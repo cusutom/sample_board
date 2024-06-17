@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+        p, div, h1 {
+            margin:20px 20px;
+            padding:20px 40px ;
+        }
+        .testaccountinfo {
+            padding: 10px;
+            border: 1px solid black;
+            background: silver;
+        }
+        .welcomebutton {
+            display:flex;
+        }
+        .welcomebutton.div {
+            margin:20px 20px;
+            padding:20px 40px ;
+            display:flex;
+        }
+        </style>
+        <h1>welcomeページ</h1>
+    </head>
+
+    <body>  
+        {% if messages %}
+        {% for message in messages %}
+            <p><div>{{ message.message }}</div></p>
+        {% endfor %}
+        {% endif %}
+        <div class="welcomebutton">
+        <div><button><a class="navbar-brand" href="{% url 'accounts:new_regist' %}">新規ユーザー登録</a></button></div>
+        <div><button><a class="navbar-brand" href="{% url 'accounts:login' %}">ログイン</a></button></div>
+        </div> 
+        <div class="testaccountinfo"><p>ログイン用テストアカウント</p>
+        <a>学籍番号:1111<br>
+        パスワード:test1test1<br><br>
+        ログイン画面で上記の情報を入力するとログインできます。</a></div>
+    </body>
+</html>

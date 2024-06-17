@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>{{ theme.title }}</h3>{% comment %}{% endcomment %}
+{% for comment in comments %} {% comment %} commentsの中のcommentを繰り返して {% endcomment %}
+<div class="col-1 offset-1"> {% comment %}1の幅のカラム(要素=col)に対し、1の幅の隙間(offset)を作る{% endcomment %}
+    {% if comment.user.picture %} {% comment %}もし、コメントしたユーザーの写真があったら{% endcomment %}
+        <img style="float:left;" width="50px" height="50px" src="{{ comment.user.picture.url }}"> {% comment %}左の指定で表示{% endcomment %}
+    {% endif %}
+</div>
+<div class="col-8 offset-2">{% comment %}8の幅のカラム(要素=col)に対し、2の幅の隙間(offset)を作る{% endcomment %}
+<p>名前：{{ comment.user.first_name }}{{ comment.user.last_name }}さん</p>
+<p>{{ comment.comment | linebreaks }}</p>
+</div>
+<div class="col-10 offset-1">{% comment %}10の幅のカラム(要素=col)に対し、1の幅の隙間(offset)を作る{% endcomment %}
+<hr>
+</div>
+{% endfor %}
+{% if user.is_authenticated %}
+<div class="col-4 offset-7">{% comment %}4の幅のカラム(要素=col)に対し、7の幅の隙間(offset)を作る{% endcomment %}
+    <form method="POST">
+    {% csrf_token %}
+    {{ post_comment_form.as_p }}
+    
+    <input type="submit" value="コメント送信">
+    </form>
+</div>
+{% endif %}
+{% endblock %}
