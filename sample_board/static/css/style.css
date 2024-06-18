@@ -1,0 +1,20 @@
+#username{
+    background-color: #dfd4c877;
+}
+  
+p, div, h1, h3 {
+    margin:20px 20px;
+    padding:20px 40px;
+}
+
+#comment{
+    padding: 10px;
+    border: 1px solid black;
+    background: silver;
+}
+
+#post_comment{
+    padding: 10px;
+    border: 1px solid black;
+    background: silver;
+}
