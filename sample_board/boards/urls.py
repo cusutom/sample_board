@@ -11,7 +11,9 @@ urlpatterns = [
     path('search_themes', views.search_themes, name='search_themes'),
     path('edit_theme/<int:id>', views.edit_theme, name='edit_theme'),
     path('delete_theme/<int:id>', views.delete_theme, name='delete_theme'),
-    path('post_comments/<int:theme_id>', views.post_comments, name='post_comments'), #<int:theme_id>でタイトルごとにidを振ってページを自動で作成し、接続することができるようになる。
+    path('post_comments/<int:theme_id>', views.post_comments, name='post_comments'),
+    path('edit_comment/<int:id>', views.edit_comment, name='edit_comment'),
+    path('delete_comment/<int:id>', views.delete_comment, name='delete_comment'),
 ]
 
 if settings.DEBUG:

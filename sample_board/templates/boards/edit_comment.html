@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>コメント編集</h1>
+<form method="POST">
+{% csrf_token %}
+{{ edit_comment_form.as_p }}
+<input type="submit" value="コメント更新">
+</form>
+<a href="{% url 'accounts:home' %}">ホームに戻る</a>
+<a href="{% url 'boards:delete_comment' id=id %}">コメント削除</a>
+{% endblock %}

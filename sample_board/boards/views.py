@@ -3,7 +3,6 @@ from . import forms
 from .models import Themes, Comments
 from django.http import Http404
 from django.contrib import messages
-from django.core.cache import cache
 from django.core.paginator import Paginator
 # Create your views here.
 
@@ -63,6 +62,7 @@ def delete_theme(request, id):
         }
     )
 
+
 #コメント投稿
 def post_comments(request, theme_id):
     post_comment_form = forms.PostCommentForm(request.POST or None,)
@@ -84,6 +84,39 @@ def post_comments(request, theme_id):
         }
     )
 
+#コメント更新
+def edit_comment(request, id):
+    comment = get_object_or_404(Comments, id=id)
+    if comment.user.id != request.user.id:
+        raise Http404
+    edit_comment_form = forms.PostCommentForm(request.POST or None, instance=comment)
+    if edit_comment_form.is_valid():
+        edit_comment_form.save()
+        messages.success(request, 'コメントを更新しました')
+        return redirect('boards:list_themes')
+    return render(
+        request, 'boards/edit_comment.html', context={
+            'edit_comment_form': edit_comment_form,
+            'id': id,
+        }
+    )
+
+#コメント削除
+def delete_comment(request, id):
+    comment = get_object_or_404(Comments, id=id)
+    if comment.user.id !=request.user.id:
+        raise Http404
+    delete_comment_form = forms.DeleteCommentForm(request.POST or None)
+    if delete_comment_form.is_valid():
+        comment.delete()
+        messages.success(request, 'コメントを削除しました')
+        return redirect('boards:list_themes')
+    return render(
+        request, 'boards/delete_comment.html', context={
+            'delete_comment_form': delete_comment_form
+        }
+    )
+
 #検索機能
 def search_themes(request): 
         queryset = Themes.objects.fetch_all_themes() #querysetにThemesモデルのデータを全て格納
@@ -100,5 +133,13 @@ def search_themes(request):
             }
         )
         
-    
+#ページネーション機能
+def pagenation(request):
+    theme_list = Themes.objects.all()
+    theme_p = Paginator(theme_list, 5)
+    p = request.GET.get('p')
+    articles = theme_p.get_page(p) # 指定のページのArticleを取得
+    return render(request, 'list_themes.html', {'articles': articles})
+
+
 

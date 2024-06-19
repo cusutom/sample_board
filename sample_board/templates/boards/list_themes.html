@@ -37,6 +37,25 @@
     
 </table>
 
+<div class="pager">
+    <!-- 前のページへのリンク -->
+    {% if articles.has_previous %}
+        <a href="?p={{ articles.previous_page_number }}">前へ</a>
+    {% endif %}
+
+    <!-- 現在のページ番号と全体のページ数 -->
+    {% if articles %}
+        <span>
+            {{ articles.number }} / {{ articles.paginator.num_pages }}
+        </span>
+    {% endif %}
+
+    <!-- 次のページへのリンク -->
+    {% if articles.has_next %}
+        <a href="?p={{ articles.next_page_number }}">次へ</a>
+    {% endif %}
+</div>
+
 <div><p>タイトルをクリックすると、その掲示板の中の詳細画面にうつります。<br>
 掲示板の作成、コメントの送信は「先生」のユーザーしかできません。
 掲示板の作成者のみ、作成者の名前をクリックできるようになり、掲示板の編集、削除ができます。</p></div>

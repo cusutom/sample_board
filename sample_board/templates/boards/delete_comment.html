@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>掲示板削除画面</h1>
+<h1>コメント削除画面</h1>
 <form method="POST">
 {% csrf_token %}
-{{ delete_theme_form.as_p }}
+{{ delete_comment_form.as_p }}
 <input type="submit" value="削除する">
-<a href="{% url 'boards:list_themes' %}">戻る</a>
+<a href="{% url 'accounts:home' %}">ホームに戻る</a>
 </form>
 {% endblock %}

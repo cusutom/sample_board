@@ -22,4 +22,10 @@ class PostCommentForm(forms.ModelForm):
         model = Comments
         fields = ('comment', 'attach')
 
+class DeleteCommentForm(forms.ModelForm):
+    
+    class Meta:
+        model = Comments
+        fields = []
+
 
