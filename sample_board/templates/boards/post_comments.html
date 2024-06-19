@@ -5,9 +5,9 @@
 <div id="comment">
 <p>名前：{{ comment.user.first_name }}先生</p>
 <p>投稿日：{{ comment.created_at | date:"Y/m/d" }}</p>
-<p>投稿内容：{{ comment.comment | linebreaks }}</p>
+<p>投稿内容：{{ comment.comment }}</p>
     {% if comment.attach %}
-    <p>添付ファイル：{{ comment.attach }}</p>
+    <p>添付ファイル：<a href="{{ comment.attach.file.url }}" download="{{ comment.attach.file.name }}" >ファイルをダウンロード</a></p>
     {% endif %}
 </div>
 {% endfor %}
@@ -25,4 +25,5 @@
     {% endif %}
 {% endif %}
 
+<a href="{% url 'accounts:home' %}">戻る</a>
 {% endblock %}

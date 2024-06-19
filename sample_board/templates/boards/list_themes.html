@@ -27,9 +27,9 @@
             <td>{{ theme.created_at|date:"Y/m/d" }}</td>
             <td><a href="{% url 'boards:post_comments' theme_id=theme.id%}">{{ theme.title }}</a></td>
             {% if theme.user.id == user.id %}
-                <td><a href="{% url 'boards:edit_theme' id=theme.id %}">{{ theme.user }}</a></td>
+                <td><a href="{% url 'boards:edit_theme' id=theme.id %}">{{ theme.user }}先生</a></td>
             {% else %}
-                <td>{{ theme.user }}</td>
+                <td>{{ theme.user }}先生</td>
             {% endif %}
         </tr>
     {% endfor %}
