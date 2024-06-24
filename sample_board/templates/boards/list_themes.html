@@ -21,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for theme in themes %}
+    {% for theme in pages %}
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ theme.created_at|date:"Y/m/d" }}</td>
@@ -37,25 +37,35 @@
     
 </table>
 
-<div class="pager">
-    <!-- 前のページへのリンク -->
-    {% if articles.has_previous %}
-        <a href="?p={{ articles.previous_page_number }}">前へ</a>
-    {% endif %}
+{% if pages.has_other_pages %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if pages.has_previous %}
+                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.previous_page_number }}"><<</a></li>
+            {% else %}
+                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"><<</div></li>
+            {% endif %}
 
-    <!-- 現在のページ番号と全体のページ数 -->
-    {% if articles %}
-        <span>
-            {{ articles.number }} / {{ articles.paginator.num_pages }}
-        </span>
-    {% endif %}
+            {% for page_num in pages.paginator.page_range %}
+                {% if page_num %}
+                    {% if page_num == pages.number %}
+                        <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">{{ page_num }}</div></li>
+                    {% else %}
+                        <li><a class="page-link text-primary d-inline-block" href="?page={{ page_num }}">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted" href="#">・・・</a></li>
+                {% endif %}
+            {% endfor %}
 
-    <!-- 次のページへのリンク -->
-    {% if articles.has_next %}
-        <a href="?p={{ articles.next_page_number }}">次へ</a>
-    {% endif %}
-</div>
-
+            {% if pages.has_next %}
+                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.next_page_number }}">>></a></li>
+            {% else %}
+                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">>></div></li>
+            {% endif %}
+        </ul>
+    </nav>
+  {% endif %}
 <div><p>タイトルをクリックすると、その掲示板の中の詳細画面にうつります。<br>
 掲示板の作成、コメントの送信は「先生」のユーザーしかできません。
 掲示板の作成者のみ、作成者の名前をクリックできるようになり、掲示板の編集、削除ができます。</p></div>

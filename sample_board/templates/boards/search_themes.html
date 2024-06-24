@@ -25,12 +25,43 @@
             <td>{{ theme.created_at|date:"Y/m/d" }}</td>
             <td><a href="{% url 'boards:post_comments' theme_id=theme.id %}">{{ theme.title }}</a></td>
             {% if theme.user.id == user.id %}
-                <td><a href="{% url 'boards:edit_theme' id=theme.id %}">{{ theme.user }}</a></td>
+                <td><a href="{% url 'boards:edit_theme' id=theme.id %}">{{ theme.user }}先生</a></td>
             {% else %}
                 <td>{{ theme.user }}</td>
             {% endif %}
         </tr>
     {% endfor %}
+
+    {% if queryset.has_other_pages %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if queryset.has_previous %}
+                <li><a class="page-link text-primary d-inline-block" href="?page={{ queryset.previous_page_number }}"><<</a></li>
+            {% else %}
+                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"><<</div></li>
+            {% endif %}
+
+            {% for page_num in queryset.paginator.page_range %}
+                {% if page_num %}
+                    {% if page_num == queryset.number %}
+                        <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">{{ page_num }}</div></li>
+                    {% else %}
+                        <li><a class="page-link text-primary d-inline-block" href="?page={{ page_num }}">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted" href="#">・・・</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if queryset.has_next %}
+                <li><a class="page-link text-primary d-inline-block" href="?page={{ queryset.next_page_number }}">>></a></li>
+            {% else %}
+                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">>></div></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
     </tbody>
 </table>
 {% endblock %}

@@ -14,6 +14,8 @@ urlpatterns = [
     path('post_comments/<int:theme_id>', views.post_comments, name='post_comments'),
     path('edit_comment/<int:id>', views.edit_comment, name='edit_comment'),
     path('delete_comment/<int:id>', views.delete_comment, name='delete_comment'),
+    path('post_comments/', views.download, name='download'),
+
 ]
 
 if settings.DEBUG:

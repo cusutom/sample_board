@@ -1,10 +1,15 @@
+import mimetypes
+import shutil
 from django.shortcuts import render, redirect, get_object_or_404
 from . import forms
 from .models import Themes, Comments
 from django.http import Http404
 from django.contrib import messages
-from django.core.paginator import Paginator
-# Create your views here.
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
+from django.http import FileResponse
+
+
 
 #掲示板作成
 def create_theme(request):
@@ -21,13 +26,33 @@ def create_theme(request):
         }
     )
 
+#掲示板一覧
 def list_themes(request):
-    themes = Themes.objects.fetch_all_themes() #なんやこれ
+    themes_list = Themes.objects.fetch_all_themes()
+    #ページネーション 
+    p = Paginator(themes_list, 5) #5つで1ページ
+    page = request.GET.get('page') #リクエストページ
+    pages = p.get_page(page)
     return render(
         request, 'boards/list_themes.html', context={
-            'themes': themes
+            
+            'pages': pages
         }
     )
+
+#検索機能
+def search_themes(request): 
+    queryset = Themes.objects.fetch_all_themes() #querysetにThemesモデルのデータを全て格納
+    query = request.GET.get('query') #query(検索に入力された言葉)を取得
+    if query: #もし検索ワードあれば
+        queryset = queryset.filter(title__icontains=query) #タイトルを検索ワードでフィルターかけてthemesデータを抽出    
+    return render(
+    request, 'boards/search_themes.html', context={
+        'query': query,
+        'queryset': queryset,         
+        }
+    )
+
 
 #掲示板更新
 def edit_theme(request, id):
@@ -116,30 +141,25 @@ def delete_comment(request, id):
             'delete_comment_form': delete_comment_form
         }
     )
-
-#検索機能
-def search_themes(request): 
-        queryset = Themes.objects.fetch_all_themes() #querysetにThemesモデルのデータを全て格納
-        queryset = queryset.order_by('-pk') #降順に整理
-        query = request.GET.get('query') #query(検索に入力された言葉)を取得
-
-        if query: #もし検索ワードあれば
-            queryset = queryset.filter(title__icontains=query) #タイトルを検索ワードでフィルターかけてthemesデータを抽出
-        # search_themesに検索ワードと抽出したthemesを渡す。
-        return render(
-        request, 'boards/search_themes.html', context={
-            'query': query,
-            'queryset': queryset,            
-            }
-        )
         
-#ページネーション機能
-def pagenation(request):
-    theme_list = Themes.objects.all()
-    theme_p = Paginator(theme_list, 5)
-    p = request.GET.get('p')
-    articles = theme_p.get_page(p) # 指定のページのArticleを取得
-    return render(request, 'list_themes.html', {'articles': articles})
+#ファイルダウンロード機能
+def download(request):
+    upload_file = get_object_or_404(Comments)
+    file = upload_file.attach  # ファイル本体
+    name = file.name  # ファイル名
+
+    # ファイル名からmimetypeを推測。拡張子がないファイル等は、application/octet-stream
+    response = HttpResponse(content_type=mimetypes.guess_type(name)[0] or 'application/octet-stream')
+
+    # Content-Dispositionでダウンロードの強制
+    response['Content-Disposition'] = f'attachment; filename={name}'
+
+    # HttpResponseに、ファイルの内容を書き込む
+    shutil.copyfileobj(file, response)
+
+    return response
+
+
 
 
 
