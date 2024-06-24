@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-
+<h1>アカウント削除画面</h1>
 <form method="POST" class="border 1px solid lg">
 {% csrf_token %}
 {{ delete_user_form.as_p }}
+<p class=message>本当にアカウントを削除してもよろしいですか？</p><br>
 
-<p >本当にアカウントを削除してもよろしいですか？</p><br>
-<p>アカウントを削除すると、ログアウトしてwelcomeページに戻ります。</p>
+<div class="buttons">
+    <input class="delete-button" type="submit" value="ユーザ削除">
+    <a class="return-button" href="{% url 'accounts:edit' %}">戻る</a>
+</div>
 
-<div><input type="submit" value="ユーザ削除"></div>
-<div><a href="{% url 'accounts:edit' %}">戻る</a></div>
-
+<p>アカウントを削除すると、ログアウトしてwelcomeページに移動します。</p>
 </form>
 {% endblock %}

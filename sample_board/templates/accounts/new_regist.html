@@ -3,14 +3,47 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <h2>新規ユーザー登録画面</h2>
+        <style>
+        .execution-button{
+            padding: 5px 10px;
+            margin: 20px 60px;
+            border: 1px solid rgb(190, 190, 190);
+            background: rgb(85, 253, 93);
+            color: white;
+        }
+
+        .return-button{
+            padding: 5px 10px;
+            margin: 20px 60px;
+            border: 1px solid rgb(190, 190, 190);
+            background: rgb(100, 167, 243);
+            color: white;
+        }
+
+        .delete-button{
+            padding: 5px 10px;
+            margin: 20px 60px;
+            border: 1px solid rgb(190, 190, 190);
+            background: rgb(247, 99, 40);
+            color: white;
+        }
+
+        .buttons{
+            display: flex;
+            padding: 5px 10px;
+        }
+        </style>
+        <h1>新規ユーザー登録画面</h1>
+
     </head>
     <body>
         <form method="POST">
             {% csrf_token %}
             {{ new_regist_form.as_p }}
-            <input type="submit" value="ユーザ登録">
+            <div class="buttons">
+                <input class="execution-button" type="submit" value="ユーザ登録">
+                <a class="return-button" href="{% url 'accounts:welcome' %}">welcomeページに戻る</a>
+            </div>
         </form>
-    <a href="{% url 'accounts:welcome' %}">戻る</a>
     </body>
 </html>

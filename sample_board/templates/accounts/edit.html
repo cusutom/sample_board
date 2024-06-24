@@ -6,10 +6,13 @@
     {% endfor %}
 {% endif %}
 <form method="POST" enctype="multipart/form-data" >
+<h1>ユーザー情報更新画面</h1>
 {% csrf_token %}
 {{ user_edit_form.as_p }}
-<input type="submit" value="更新">
+<div class="buttons">
+    <input class="execution-button" type="submit" value="更新">
+    <a class="delete-button" href="{% url 'accounts:delete' id=user.id  %}">ユーザー削除</a><br>
+    <a class="return-button" href="{% url 'accounts:home' %}">ホームに戻る</a>
+</div>
 </form>
-<a href="{% url 'accounts:delete' id=user.id  %}">ユーザー削除</a><br>
-<a href="{% url 'accounts:home' %}">戻る</a>
 {% endblock %}

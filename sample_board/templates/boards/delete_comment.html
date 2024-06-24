@@ -4,7 +4,9 @@
 <form method="POST">
 {% csrf_token %}
 {{ delete_comment_form.as_p }}
-<input type="submit" value="削除する">
-<a href="{% url 'accounts:home' %}">ホームに戻る</a>
+<div class="buttons">
+    <input class="delete-button" type="submit" value="削除する">
+    <a class="return-button" href="{% url 'accounts:home' %}">ホームに戻る</a>
+</div>
 </form>
 {% endblock %}

@@ -1,0 +1,4 @@
+{% for file in uploadfile %}
+        <a href="{% url 'boards:download' theme.id %}">{{ uploadfile }}</a>
+        <hr>
+{% endfor %}

@@ -4,7 +4,10 @@
 <form method="POST">
 {% csrf_token %}
 {{ create_theme_form.as_p }}
-<input type="submit" value="掲示板作成">
+<div class="buttons">
+    <input class="execution-button" type="submit" value="掲示板作成">
+    <a class="return-button" href="{% url 'accounts:home' %}">ホーム画面に戻る</a>
+</div>
 </form>
-<a href="{% url 'accounts:home' %}">戻る</a>
+
 {% endblock %}

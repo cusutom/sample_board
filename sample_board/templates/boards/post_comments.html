@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<h3>{{ theme.title }}</h3>
+<h1>{{ theme.title }}</h1>
 {% for comment in comments %} 
     <div id="comment">
     <p>名前：{{ comment.user.first_name }}先生</p>
     <p>投稿日：{{ comment.created_at | date:"Y/m/d" }}</p>
     <p>投稿内容：{{ comment.comment }}</p>
         {% if comment.attach %}
-        <p>添付ファイル：<a href="{{ comment.attach.file.url }}" download="{{ comment.attach.file.name }}" >ファイルをダウンロード</a></p>
+        <p>添付ファイル：<a href="{% url 'boards:download' id=comment.id %}">添付ファイルを表示</a></p>
         {% endif %}
     {% if comment.user.id == user.id %}
-    <a href="{% url 'boards:edit_comment' id=comment.id %}">コメント編集</a>
-    <a href="{% url 'boards:delete_comment' id=comment.id %}">コメント削除</a>
+    <a class="execution-button" href="{% url 'boards:edit_comment' id=comment.id %}">コメント編集</a>
+    <a class="delete-button" href="{% url 'boards:delete_comment' id=comment.id %}">コメント削除</a>
     {% endif %}
     </div>
 {% endfor %}
@@ -23,11 +23,11 @@
         {% csrf_token %}
         {{ post_comment_form.as_p }}
     
-        <input type="submit" value="投稿">
+        <input class="execution-button" type="submit" value="投稿">
         </form>
     </div>
     {% endif %}
 {% endif %}
 
-<a href="{% url 'boards:list_themes' %}">戻る</a>
+<a class="return-button" href="{% url 'boards:list_themes' %}">掲示板一覧画面に戻る</a>
 {% endblock %}

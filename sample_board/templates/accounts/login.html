@@ -7,11 +7,44 @@
         p, div, h1 {
             margin:20px 20px;
             padding:20px 40px ;
+            text-align: center;
         }
         .testaccountinfo {
             padding: 10px;
-            border: 1px solid black;
+            border: double 1px black;
             background: silver;
+        }
+
+        #welcomebutton {
+            display:flex;
+        }
+
+        .button{
+            padding: 5px 10px;
+            margin: 20px 60px;
+            border: 1px solid rgb(190, 190, 190);
+            background: rgb(54, 54, 54);
+            color: white;
+        }
+
+        .account-name{
+            font-weight: bold
+        }
+
+        .execution-button{
+            padding: 5px 10px;
+            margin: 20px 60px;
+            border: 1px solid rgb(190, 190, 190);
+            background: rgb(85, 253, 93);
+            color: white;
+        }
+
+        .return-button{
+            padding: 5px 10px;
+            margin: 20px 60px;
+            border: 1px solid rgb(190, 190, 190);
+            background: rgb(100, 167, 243);
+            color: white;
         }
         </style>
         <h1>ログイン画面</h1>
@@ -25,11 +58,21 @@
             {% endif %}
             {% csrf_token %}
             {{ login_form.as_p }}
-            <input type="submit" value="ログイン">
+            <div class="buttons">
+                <input class="execution-button" type="submit" value="ログイン">
+                <a class="return-button" href="{% url 'accounts:welcome' %}">welcomeページに戻る</a>
+            </div>
             <div class="testaccountinfo"><p>ログイン用テストアカウント</p>
-            <a>学籍番号:1111<br>
-            パスワード:test1test1<br><br>
-            ログイン画面で上記の情報を入力するとログインできます。</a></div>
+                <a class='account-name'>教師用アカウント</a><br>
+                <a>学籍番号:1111<br>
+                パスワード:test1test1</a><br><br>
+                
+                
+                <a class='account-name'>生徒用アカウント</a><br>
+                <a>学籍番号:270001<br>
+                パスワード:sampletarou270001<br><br>
+                ログイン画面で上記の情報を入力するとログインできます。</a>
+            </div>
         </form>
     </body>
-<a href="{% url 'accounts:welcome' %}">戻る</a>
+</html>

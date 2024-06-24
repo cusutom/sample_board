@@ -143,20 +143,13 @@ def delete_comment(request, id):
     )
         
 #ファイルダウンロード機能
-def download(request):
-    upload_file = get_object_or_404(Comments)
+def download(request, id):
+    upload_file = get_object_or_404(Comments, id=id)
     file = upload_file.attach  # ファイル本体
     name = file.name  # ファイル名
-
-    # ファイル名からmimetypeを推測。拡張子がないファイル等は、application/octet-stream
-    response = HttpResponse(content_type=mimetypes.guess_type(name)[0] or 'application/octet-stream')
-
-    # Content-Dispositionでダウンロードの強制
-    response['Content-Disposition'] = f'attachment; filename={name}'
-
-    # HttpResponseに、ファイルの内容を書き込む
-    shutil.copyfileobj(file, response)
-
+    response = HttpResponse(content_type=mimetypes.guess_type(name)[0] or 'application/octet-stream') # ファイル名からmimetypeを推測。拡張子がないファイル等は、application/octet-stream
+    response['Content-Disposition'] = f'attachment; filename={name}' # Content-Dispositionでダウンロードの強制
+    shutil.copyfileobj(file, response) # HttpResponseに、ファイルの内容を書き込む
     return response
 
 

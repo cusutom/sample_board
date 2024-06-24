@@ -25,6 +25,7 @@ def regist(request):
     if regist_form.is_valid():
         try: #例外処理
             regist_form.save()
+            messages.success(request, f'ユーザー登録をしました。')
             return redirect('accounts:home') 
         except ValidationError as e:
             regist_form.add_error('password', e)
@@ -40,6 +41,7 @@ def new_regist(request):
     if new_regist_form.is_valid():
         try: #例外処理
             new_regist_form.save()
+            messages.success(request, f'新規のユーザー登録をしました。ログインを行ってください。')
             return redirect('accounts:home') 
         except ValidationError as e:
             new_regist_form.add_error('password', e)

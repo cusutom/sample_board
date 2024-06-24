@@ -8,7 +8,7 @@
 <h1>掲示板"一覧"画面</h1>
 {% if user.is_authenticated %}
     {% if user.status == "teacher" %}
-        <div><a class="navbar-brand" href="{% url 'boards:create_theme' %}">掲示板を新たに作成</a></div>
+        <div><a class="execution-button" href="{% url 'boards:create_theme' %}">掲示板を新たに作成</a></div>
     {% endif %}
 {% endif %}
 <table class="table table-striped table-hover">
@@ -65,7 +65,10 @@
             {% endif %}
         </ul>
     </nav>
-  {% endif %}
+{% endif %}
+
+<a class="return-button" href="{% url 'accounts:home' %}">ホームに戻る</a>
+
 <div><p>タイトルをクリックすると、その掲示板の中の詳細画面にうつります。<br>
 掲示板の作成、コメントの送信は「先生」のユーザーしかできません。
 掲示板の作成者のみ、作成者の名前をクリックできるようになり、掲示板の編集、削除ができます。</p></div>

@@ -1,10 +1,32 @@
 #username{
     background-color: #dfd4c877;
 }
-  
- h1, h3 {
+
+#function-introduce{
+    padding: 10px;
+    border: 1px solid black;
+    background: silver;
+}
+
+
+div, p, h1, h3 {
     margin:20px 20px;
     padding:20px 40px;
+}
+
+div h2{
+    margin:20px 20px;
+    padding:20px 40px;
+}
+
+div li{
+    font-weight: bold
+}
+
+
+
+h1, .message {
+    text-align: center;
 }
 
 #comment{
@@ -19,4 +41,32 @@
     background: silver;
 }
 
+.execution-button{
+    padding: 5px 10px;
+    margin: 20px 60px;
+    border: 1px solid rgb(190, 190, 190);
+    background: rgb(85, 253, 93);
+    color: white;
+}
+
+.return-button{
+    padding: 5px 10px;
+    margin: 20px 60px;
+    border: 1px solid rgb(190, 190, 190);
+    background: rgb(100, 167, 243);
+    color: white;
+}
+
+.delete-button{
+    padding: 5px 10px;
+    margin: 20px 60px;
+    border: 1px solid rgb(190, 190, 190);
+    background: rgb(247, 99, 40);
+    color: white;
+}
+
+.buttons{
+    display: flex;
+    padding: 5px 10px;
+}
 

@@ -7,21 +7,30 @@
         p, div, h1 {
             margin:20px 20px;
             padding:20px 40px;
+            text-align: center;
         }
         .testaccountinfo {
             padding: 10px;
             border: 1px solid black;
             background: silver;
         }
-        .welcomebutton {
+        #welcomebutton {
             display:flex;
         }
-        .welcomebutton.div {
-            margin:20px 20px;
-            padding:20px 40px ;
-            display:flex;
+
+        .button{
+            padding: 5px 10px;
+            margin: 20px 60px;
+            border: 1px solid rgb(190, 190, 190);
+            background: rgb(54, 54, 54);
+            color: white;
+        }
+
+        .account-name{
+            font-weight: bold
         }
         </style>
+        <title>学校連絡掲示板</title>
         <h1>welcomeページ</h1>
     </head>
 
@@ -31,13 +40,20 @@
             <p><div>{{ message.message }}</div></p>
         {% endfor %}
         {% endif %}
-        <div class="welcomebutton">
-        <div><button><a class="navbar-brand" href="{% url 'accounts:new_regist' %}">新規ユーザー登録</a></button></div>
-        <div><button><a class="navbar-brand" href="{% url 'accounts:login' %}">ログイン</a></button></div>
+        <div id="welcomebuttons">
+            <a class="button" href="{% url 'accounts:new_regist' %}">新規ユーザー登録</a>
+            <a class="button" href="{% url 'accounts:login' %}">ログイン</a>
         </div> 
         <div class="testaccountinfo"><p>ログイン用テストアカウント</p>
-        <a>学籍番号:1111<br>
-        パスワード:test1test1<br><br>
-        ログイン画面で上記の情報を入力するとログインできます。</a></div>
+            <a class='account-name'>教師用アカウント</a>
+            <a>学籍番号:1111<br>
+            パスワード:test1test1<br><br>
+            ログイン画面で上記の情報を入力するとログインできます。</a><br><br>
+            
+            <a class='account-name'>生徒用アカウント</a>
+            <a>学籍番号:270001<br>
+            パスワード:sampletarou270001<br><br>
+            ログイン画面で上記の情報を入力するとログインできます。</a>
+        </div>
     </body>
 </html>
