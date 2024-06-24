@@ -82,7 +82,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
     school_grade = models.PositiveIntegerField(blank=True, null=True) #学年
     school_class = models.PositiveIntegerField(blank=True, null=True) #組
     email = models.EmailField(max_length=150, blank=True, null=True) #学生はメアド持ってない場合があることを想定して必須項目にしない。
-    club = models.CharField(max_length=150, null=True) #帰宅部想定でnull=True
+    club = models.CharField(max_length=150, blank=True, null=True) #帰宅部想定でnull=True
     is_active = models.BooleanField(default=True) #認証登録は今回は省くためdefault=True
     is_staff = models.BooleanField(default=False) 
     created_at = models.DateTimeField(auto_now_add=True) #登録日時
@@ -94,7 +94,6 @@ class Users(AbstractBaseUser, PermissionsMixin):
     STATUS_CHOICES = (
         ('teacher', 'Teacher'),
         ('student', 'Student'),
-        ('parent', 'Parent'),
     )
     gender = models.CharField(max_length=50, choices=GENDER_CHOICES) #性別
     status = models.CharField(max_length=50, choices=STATUS_CHOICES) #立場

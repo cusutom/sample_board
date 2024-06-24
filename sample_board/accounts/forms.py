@@ -88,7 +88,6 @@ class UserEditForm(forms.ModelForm):
     STATUS_CHOICES = (
         ('teacher', 'Teacher'),
         ('student', 'Student'),
-        ('parent', 'Parent'),
     ) 
     gender = forms.ChoiceField(label='性別', choices=GENDER_CHOICES) 
     status = forms.ChoiceField(label='学校との関係', choices=STATUS_CHOICES)
