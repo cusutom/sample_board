@@ -84,7 +84,7 @@ def logout_user(request):
 #ユーザー情報更新処理
 @login_required
 def edit_user(request):
-    user_edit_form = forms.UserEditForm(request.POST or None, request.FILES or None, instance=request.user)
+    user_edit_form = forms.UserEditForm(request.POST or None, request.FILES or None)
     if user_edit_form.is_valid():
         messages.success(request, '更新完了しました')
         user_edit_form.save()

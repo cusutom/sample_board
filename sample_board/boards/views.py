@@ -5,9 +5,9 @@ from . import forms
 from .models import Themes, Comments
 from django.http import Http404
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.http import FileResponse
+
 
 
 
@@ -28,7 +28,7 @@ def create_theme(request):
 
 #掲示板一覧
 def list_themes(request):
-    themes_list = Themes.objects.fetch_all_themes()
+    themes_list = Themes.objects.fetch_all_themes().order_by('-id')
     #ページネーション 
     p = Paginator(themes_list, 5) #5つで1ページ
     page = request.GET.get('page') #リクエストページ
@@ -92,13 +92,14 @@ def delete_theme(request, id):
 def post_comments(request, theme_id):
     post_comment_form = forms.PostCommentForm(request.POST or None,)
     theme = get_object_or_404(Themes, id=theme_id)
-    comments = Comments.objects.fetch_by_theme_id(theme_id)
+    comments = Comments.objects.fetch_by_theme_id(theme_id).order_by('-created_at')
     if post_comment_form.is_valid():
         if not request.user.is_authenticated:
             raise Http404
         post_comment_form.instance.theme = theme
         post_comment_form.instance.user = request.user
-        post_comment_form.instance.attach = request.FILES['attach']
+        if post_comment_form.instance.attach:
+            post_comment_form.instance.attach = request.FILES['attach']
         post_comment_form.save()
         return redirect('boards:post_comments', theme_id=theme_id)
     return render(
@@ -117,8 +118,9 @@ def edit_comment(request, id):
     edit_comment_form = forms.PostCommentForm(request.POST or None, instance=comment)
     if edit_comment_form.is_valid():
         edit_comment_form.save()
+        theme_id = comment.theme.id
         messages.success(request, 'コメントを更新しました')
-        return redirect('boards:list_themes')
+        return redirect('boards:post_comments', theme_id)
     return render(
         request, 'boards/edit_comment.html', context={
             'edit_comment_form': edit_comment_form,
@@ -133,9 +135,11 @@ def delete_comment(request, id):
         raise Http404
     delete_comment_form = forms.DeleteCommentForm(request.POST or None)
     if delete_comment_form.is_valid():
+        theme_id = comment.theme.id
         comment.delete()
+        
         messages.success(request, 'コメントを削除しました')
-        return redirect('boards:list_themes')
+        return redirect('boards:post_comments', theme_id)
     return render(
         request, 'boards/delete_comment.html', context={
             'delete_comment_form': delete_comment_form

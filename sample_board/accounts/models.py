@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
-from datetime import datetime
 # Create your models here.
 
 class UserManager(BaseUserManager):
@@ -70,9 +69,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db) 
         return user
 
-#ユーザーモデル(教師、保護者、生徒含む)
+#ユーザーモデル(教師、生徒含む)
 class Users(AbstractBaseUser, PermissionsMixin):
-    school_id = models.IntegerField(unique=True) #学籍番号
+    school_id = models.IntegerField(unique=True) #ユーザーid
     class_id = models.IntegerField(blank=True, null=True) #出席番号、教師は出席番号をもたないため、必須にはしない。
     first_name = models.CharField(max_length=150) #姓
     last_name = models.CharField(max_length=150) #名

@@ -4,7 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 
 #登録処理
 class RegistForm(forms.ModelForm):
-    school_id = forms.IntegerField(label='学籍番号')
+    school_id = forms.IntegerField(label='ユーザーID')
     class_id = forms.IntegerField(label='出席番号')
     first_name = forms.CharField(label='姓')
     last_name = forms.CharField(label='名')
@@ -22,7 +22,6 @@ class RegistForm(forms.ModelForm):
     STATUS_CHOICES = (
         ('teacher', 'Teacher'),
         ('student', 'Student'),
-        ('parent', 'Parent'),
     ) 
     gender = forms.ChoiceField(label='性別', choices=GENDER_CHOICES) 
     status = forms.ChoiceField(label='学校との関係', choices=STATUS_CHOICES) 
@@ -64,13 +63,13 @@ class RegistForm(forms.ModelForm):
 
 #ログイン入力欄
 class loginForm(forms.Form):
-    school_id = forms.CharField(label="学籍番号")
+    school_id = forms.CharField(label="ユーザーID")
     password = forms.CharField(label="パスワード", widget=forms.PasswordInput())
 
 
 #ユーザー情報更新欄
 class UserEditForm(forms.ModelForm):
-    school_id = forms.IntegerField(label='学籍番号')
+    school_id = forms.IntegerField(label='ユーザーID')
     class_id = forms.IntegerField(label='出席番号')
     first_name = forms.CharField(label='姓')
     last_name = forms.CharField(label='名')
@@ -84,13 +83,8 @@ class UserEditForm(forms.ModelForm):
     GENDER_CHOICES = (
         ('man', 'Man'),
         ('woman', 'Woman'),
-    )
-    STATUS_CHOICES = (
-        ('teacher', 'Teacher'),
-        ('student', 'Student'),
     ) 
     gender = forms.ChoiceField(label='性別', choices=GENDER_CHOICES) 
-    status = forms.ChoiceField(label='学校との関係', choices=STATUS_CHOICES)
 
     class Meta:
         model = Users
