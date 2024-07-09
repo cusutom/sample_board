@@ -65,6 +65,14 @@ h1, .message {
     color: white;
 }
 
+#password-button{
+    padding: 5px 10px;
+    margin: 20px 60px;
+    border: 1px solid rgb(190, 190, 190);
+    background: rgb(83, 83, 83);
+    color: white;
+}
+
 .buttons{
     display: flex;
     padding: 5px 10px;

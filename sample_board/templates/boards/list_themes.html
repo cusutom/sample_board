@@ -43,13 +43,13 @@
             {% if pages.has_previous %}
                 <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.previous_page_number }}"><<</a></li>
             {% else %}
-                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"><<</div></li>
+                <li class="disabled"><a id="link" class="page-link text-secondary d-inline-block disabled" href="#"><<</a></li>
             {% endif %}
 
             {% for page_num in pages.paginator.page_range %}
                 {% if page_num %}
                     {% if page_num == pages.number %}
-                        <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">{{ page_num }}</div></li>
+                        <li class="disabled"><a id="link" class="page-link text-secondary d-inline-block disabled" href="#">{{ page_num }}</a></li>
                     {% else %}
                         <li><a class="page-link text-primary d-inline-block" href="?page={{ page_num }}">{{ page_num }}</a></li>
                     {% endif %}
@@ -61,7 +61,7 @@
             {% if pages.has_next %}
                 <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.next_page_number }}">>></a></li>
             {% else %}
-                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">>></div></li>
+                <li class="disabled"><a id="link" class="page-link text-secondary d-inline-block disabled" href="#">>></a></li>
             {% endif %}
         </ul>
     </nav>

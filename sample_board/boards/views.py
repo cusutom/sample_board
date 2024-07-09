@@ -42,7 +42,7 @@ def list_themes(request):
 
 #検索機能
 def search_themes(request): 
-    queryset = Themes.objects.fetch_all_themes() #querysetにThemesモデルのデータを全て格納
+    queryset = Themes.objects.fetch_all_themes().order_by('-id') #querysetにThemesモデルのデータを全て格納
     query = request.GET.get('query') #query(検索に入力された言葉)を取得
     if query: #もし検索ワードあれば
         queryset = queryset.filter(title__icontains=query) #タイトルを検索ワードでフィルターかけてthemesデータを抽出    

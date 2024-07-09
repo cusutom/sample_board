@@ -10,8 +10,9 @@
 {% csrf_token %}
 {{ user_edit_form.as_p }}
 <div class="buttons">
+    <a id="password-button" href="{% url 'accounts:change_password' %}">パスワード変更</a>
     <input class="execution-button" type="submit" value="更新">
-    <a class="delete-button" href="{% url 'accounts:delete' id=user.id  %}">ユーザー削除</a><br>
+    <a class="delete-button" href="{% url 'accounts:delete' id=user.id  %}">ユーザー削除</a>
     <a class="return-button" href="{% url 'accounts:home' %}">ホームに戻る</a>
 </div>
 </form>

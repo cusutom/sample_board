@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Users
+from django.contrib.auth import update_session_auth_hash
 # Create your views here.
 
 #ウェルカム画面表示
@@ -107,4 +108,19 @@ def delete_user(request, **kwargs):
         }
     )
 
-
+#パスワード変更処理
+@login_required
+def change_password(request):
+    password_change_form = forms.PasswordChangeForm(request.POST or None, instance=request.user)
+    if password_change_form.is_valid():
+        try:
+            password_change_form.save()
+            messages.success(request, 'パスワード更新完了しました')
+            update_session_auth_hash(request, request.user)
+        except ValidationError as e:
+            password_change_form.add_error('password', e)
+    return render(
+        request, 'accounts/change_password.html', context={
+            'password_change_form': password_change_form
+        }
+    )
