@@ -1,5 +1,6 @@
 import mimetypes
 import shutil
+import mojimoji
 from django.shortcuts import render, redirect, get_object_or_404
 from . import forms
 from .models import Themes, Comments
@@ -40,18 +41,38 @@ def list_themes(request):
         }
     )
 
+#数字だけ半角→全角変換の関数
+def number_only_replace_zen_han(self):
+    transTable = self.maketrans("０１２３４５６７８９", "0123456789")
+    self = self.translate(transTable)
+    return self
+
 #検索機能
 def search_themes(request): 
+    query = request.GET.get(str('query')) #query(検索に入力された言葉)を取得
     queryset = Themes.objects.fetch_all_themes().order_by('-id') #querysetにThemesモデルのデータを全て格納
-    query = request.GET.get('query') #query(検索に入力された言葉)を取得
     if query: #もし検索ワードあれば
-        queryset = queryset.filter(title__icontains=query) #タイトルを検索ワードでフィルターかけてthemesデータを抽出    
+        query = mojimoji.han_to_zen(query)
+        print(f'{query}1')
+        queryset = queryset.filter(title__icontains=query) #タイトルを検索ワードでフィルターかけてthemesデータを抽出
+        print(queryset)
+        if len(queryset) == 0:
+            queryset = Themes.objects.fetch_all_themes().order_by('-id')
+            query = number_only_replace_zen_han(query)
+            print(f'{query}2')
+            queryset = queryset.filter(title__icontains=query) #タイトルを検索ワードでフィルターかけてthemesデータを抽出
+            if len(queryset) == 0:
+                queryset = Themes.objects.fetch_all_themes().order_by('-id')
+                query = mojimoji.zen_to_han(query)
+                print(f'{query}3')
+                queryset = queryset.filter(title__icontains=query) #タイトルを検索ワードでフィルターかけてthemesデータを抽出
     return render(
     request, 'boards/search_themes.html', context={
         'query': query,
         'queryset': queryset,         
         }
     )
+    
 
 
 #掲示板更新

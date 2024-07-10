@@ -118,8 +118,6 @@ class PasswordChangeForm(forms.ModelForm):
         password = cleaned_data['password']
         confirm_password = cleaned_data['confirm_password']
         old_password = cleaned_data['old_password']
-        print(old_password)
-        print(password)
         user = authenticate(password=old_password) 
         if password != confirm_password:
             raise forms.ValidationError('新しいパスワードが異なります')
